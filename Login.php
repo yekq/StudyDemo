@@ -12,9 +12,11 @@ $out=initApi();
 
 $result=$db->query("select * from test");
 
+$out->setCode(isset($result)?CODE_SUCCESS:CODE_FAIL);
 $ar=array();
 while ($row = mysqli_fetch_object($result))
 {
+
     $ar[]=$row;
 }
 $db->close();

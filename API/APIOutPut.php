@@ -5,7 +5,7 @@
  * Date: 2016/10/20
  * Time: 16:08
  */
-
+include_once ("APIConstant.php");
 class APIOutPut{
 
     private $apiResult;
@@ -14,7 +14,9 @@ class APIOutPut{
      */
     public function __construct()
     {
-
+        $this->apiResult[KEY_CODE]="";
+        $this->apiResult[KEY_MSG]="";
+        $this->apiResult[KEY_DATA]="";
     }
 
     public static function buildInstance()
@@ -38,20 +40,19 @@ class APIOutPut{
         echo json_encode($this->apiResult);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getApiResult()
+    public function setCode($code)
     {
-        return $this->apiResult;
+        $this->apiResult[KEY_CODE]=$code;
     }
 
-    /**
-     * @param mixed $apiResult
-     */
-    public function setApiResult($apiResult)
+    public function setMsg($msg)
     {
-        $this->apiResult = $apiResult;
+        $this->apiResult[KEY_MSG]=$msg;
+    }
+
+    public function setData($data)
+    {
+        $this->apiResult[KEY_DATA]=$data;
     }
 
 

@@ -7,6 +7,7 @@
  */
 include_once ("APIOutPut.php");
 include_once ("APIInput.php");
+
 function initApi()
 {
     $input=APIInput::getInstance();
@@ -14,14 +15,13 @@ function initApi()
 
     if ($pid=$input->getParamValue("pid") && $t=$input->getParamValue("t"))
     {
-        $apiResult["code"]="00";
-        $apiResult["msg"]="";
+        $out->setCode(CODE_SUCCESS);
+        $out->setMsg(MSG_VERIFY_PASS);
     }else
     {
-        $apiResult["code"]="01";
-        $apiResult["msg"]="";
+        $out->setCode(CODE_FAIL);
+        $out->setMsg(MSG_PARAM_FAIL);
     }
 
-    $out->setApiResult($apiResult);
-    return$out;
+    return $out;
 }
