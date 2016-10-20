@@ -7,13 +7,11 @@
  */
 include_once ("APIOutPut.php");
 include_once ("APIInput.php");
-echo "这是:API.PHP"."\n";
 function initApi()
 {
     $input=APIInput::getInstance();
     $out=APIOutPut::buildInstance();
 
-    echo "这是:initApi";
     if ($pid=$input->getParamValue("pid") && $t=$input->getParamValue("t"))
     {
         $apiResult["code"]="00";

@@ -5,7 +5,6 @@
  * Date: 2016/10/20
  * Time: 16:56
  */
-echo "这是:APIInput.PHP\n";
 class APIInput{
     private static $_instance;
     /**
