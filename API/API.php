@@ -1,27 +1,47 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
+ * Created by yekangqi
  * Date: 2016/10/20
  * Time: 16:54
  */
 include_once ("APIOutPut.php");
 include_once ("APIInput.php");
+include_once ("AESHelper.php");
 
 function initApi()
 {
     $input=APIInput::getInstance();
     $out=APIOutPut::buildInstance();
 
-    if ($pid=$input->getParamValue("pid") && $t=$input->getParamValue("t"))
+//    $sig=$input->getParamValue(PARAM_SIG);
+    $v=$input->getParamValue(PARAM_VERSION);
+    $t=$input->getParamValue(PARAM_TIME);
+    $data=strtr($input->getParamValue(PARAM_DATA),array(' ' => '+' ));
+//    echo "sig:".$sig."<br/>,v:".$v."<br/>,time:".$t."<br/>,data:".$data."<br/>";
+
+    if ($v && $t && $data)
     {
         $out->setCode(CODE_SUCCESS);
         $out->setMsg(MSG_VERIFY_PASS);
+        //解密
+        $md5Data=$v.Android_KEY.$t;
+//        echo "md5Data:".$md5Data."<br/>";
+        $md5=strtoupper(md5($md5Data));
+//        echo "md5:".$md5."<br/>";
+        $key=substr($md5,8,16);
+//        echo "key:".$key."<br/>";
+        $desData=AESHelper::decryptString($data,$key);
+//        echo "desData:".$desData."<br/>";
+        $out->setApiRequest(json_decode($desData));
+        return $out;
     }else
     {
         $out->setCode(CODE_FAIL);
         $out->setMsg(MSG_PARAM_FAIL);
+        $out->response();
+        return false;
     }
 
-    return $out;
 }
+
+echo AESHelper::decryptString("HLnFeTPtilwioHdKVsc Lg==","CC29C0819BC93B3E");

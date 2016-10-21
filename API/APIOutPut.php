@@ -1,13 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
+ * Created by yekangqi
  * Date: 2016/10/20
  * Time: 16:08
  */
 include_once ("APIConstant.php");
 class APIOutPut{
 
+    //请求
+    private $apiRequest;
+    //结果
     private $apiResult;
     /**
      * APIOutPut constructor.
@@ -28,12 +30,6 @@ class APIOutPut{
         return new self();
     }
 
-//    public function response($result)
-//    {
-//
-//        $model=array("code"=>"01","msg"=>"消息","data"=>$result);
-//        echo json_encode($model);
-//    }
 
     public function response()
     {
@@ -53,6 +49,17 @@ class APIOutPut{
     public function setData($data)
     {
         $this->apiResult[KEY_DATA]=$data;
+    }
+
+
+    public function getApiRequest()
+    {
+        return $this->apiRequest;
+    }
+
+    public function setApiRequest($apiRequest)
+    {
+        $this->apiRequest = $apiRequest;
     }
 
 

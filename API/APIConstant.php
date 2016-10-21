@@ -1,10 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
+ * Created by yekangqi
  * Date: 2016/10/20
  * Time: 18:14
  */
+define("Android_KEY","@fdvkmd.!#$%#&*(");
+
 //错误代码
 define("CODE_SUCCESS","00");
 define("CODE_FAIL","01");
@@ -22,5 +23,7 @@ define("MSG_GET_DATA_SUCCESS","获取数据成功!");
 define("MSG_PARAM_FAIL","参数有误!");
 
 //url参数的Name
-define("PARAM_NAME","name");
-define("PARAM_PID","pid");
+define("PARAM_SIG","sig");
+define("PARAM_VERSION","v");
+define("PARAM_TIME","t");
+define("PARAM_DATA","data");
