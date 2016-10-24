@@ -11,6 +11,8 @@ class APIOutPut{
     private $apiRequest;
     //结果
     private $apiResult;
+    //加密key
+    private $AESKey;
     /**
      * APIOutPut constructor.
      */
@@ -33,7 +35,8 @@ class APIOutPut{
 
     public function response()
     {
-        echo json_encode($this->apiResult);
+
+        echo AESHelper::encryptString(json_encode($this->apiResult,JSON_UNESCAPED_UNICODE),$this->AESKey);
     }
 
     public function setCode($code)
@@ -61,6 +64,12 @@ class APIOutPut{
     {
         $this->apiRequest = $apiRequest;
     }
+
+    public function setAESKey($AESKey)
+    {
+        $this->AESKey = $AESKey;
+    }
+
 
 
 

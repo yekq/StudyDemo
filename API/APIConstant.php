@@ -4,6 +4,7 @@
  * Date: 2016/10/20
  * Time: 18:14
  */
+//AES的key
 define("Android_KEY","@fdvkmd.!#$%#&*(");
 
 //错误代码
@@ -16,7 +17,7 @@ define("KEY_MSG","msg");
 define("KEY_DATA","data");
 
 
-//msg
+//msg,通用
 define("MSG_NET","网络错误");
 define("MSG_VERIFY_PASS","验证通过");
 define("MSG_GET_DATA_SUCCESS","获取数据成功!");

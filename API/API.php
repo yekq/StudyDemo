@@ -21,6 +21,9 @@ function initApi()
 
     if ($v && $t && $data)
     {
+        //验证参数 TODO yekangqi
+
+        //验证成功
         $out->setCode(CODE_SUCCESS);
         $out->setMsg(MSG_VERIFY_PASS);
         //解密
@@ -32,8 +35,19 @@ function initApi()
 //        echo "key:".$key."<br/>";
         $desData=AESHelper::decryptString($data,$key);
 //        echo "desData:".$desData."<br/>";
-        $out->setApiRequest(json_decode($desData));
-        return $out;
+        $requestDesData=json_decode($desData);
+        if ($requestDesData)
+        {
+            $out->setApiRequest($requestDesData);
+            $out->setAESKey($key);
+            return $out;
+        }else
+        {
+            $out->setCode(CODE_FAIL);
+            $out->setMsg(MSG_PARAM_FAIL);
+            $out->response();
+            return false;
+        }
     }else
     {
         $out->setCode(CODE_FAIL);
@@ -43,5 +57,3 @@ function initApi()
     }
 
 }
-
-echo AESHelper::decryptString("HLnFeTPtilwioHdKVsc Lg==","CC29C0819BC93B3E");

@@ -33,7 +33,11 @@ class DbHelper
 
     public function query($sql)
     {
-        return mysqli_query($this->con,$sql);
+//        echo "查询".$sql."<br/>";
+        $result=mysqli_query($this->con,$sql);
+//        echo "结果:"."<br/>";
+//        echo var_dump($result);
+        return $result;
     }
 
     public function getConnection(){
