@@ -57,3 +57,5 @@ class AESHelper {
 
 //$aes = new AESHelper();
 //echo AESHelper::decryptString("3mdjYWGMw3ZroIOp0o5mIA==", "FF2AB0974118CBB9");
+
+//echo AESHelper::encryptString("http://www.bitscn.com/pdb/php/201409/320309.html","0123456789ABCDEF");
