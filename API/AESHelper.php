@@ -56,6 +56,8 @@ class AESHelper {
 //echo DesDecryptStr("AKje9A+/JsgmY/W2gTwi7A==","1234567890asdfgh");
 
 //$aes = new AESHelper();
-//echo AESHelper::decryptString("3mdjYWGMw3ZroIOp0o5mIA==", "FF2AB0974118CBB9");
+//echo AESHelper::decryptString("LEEvdkgj3WUE5eWGSjn4LZsMji57LAH/hk57304hstzirPkpGaQQ7w3OsR/pUAC1O4EHv9X1u0epVA1s1T3nKg==", "qwertyuioasdfghj");
 
-//echo AESHelper::encryptString("http://www.bitscn.com/pdb/php/201409/320309.html","0123456789ABCDEF");
+echo AESHelper::encryptString("{\"Json解析\":\"支持格式化高亮折叠\",\"支持XML转换\":\"支持XML转换Json,Json转XML\",\"Json格式验证\":\"更详细准确的错误信息\"}","1234567890abcdef");
+//echo "\n";
+//echo AESHelper::decryptString("qkrxxA9fIF636aITDRJhcg==","1234567890abcdef");
