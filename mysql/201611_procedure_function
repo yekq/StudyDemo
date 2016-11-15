@@ -157,3 +157,5 @@ CREATE function getNameAndPw(inputId int) returns VARCHAR(255)
 SELECT getNameAndPw(31);
 
 SELECT * FROM user WHERE id=31;
+
+SELECT count(user.name) as userNameCount,count(user.password) as passwordCount from user WHERE id<>0;
