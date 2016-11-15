@@ -7,11 +7,11 @@
 
 include_once ("../../DataBase/DbHelper.php");
 
-$db->query('call getResut(1,@input)');
-$result=$db->query("select @input");
-//echo $result;
+$db->query('call getResut(2,@input,@input2)');
+$result=$db->query("select @input,@input2");
 while ($row=mysqli_fetch_row($result))
 {
-    echo "\n";
     echo $row[0];
+    echo "\n";
+    echo $row[1];
 }

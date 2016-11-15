@@ -1,0 +1,159 @@
+create table user(id  INT(16) NOT NULL PRIMARY KEY AUTO_INCREMENT,name VARCHAR(16),password VARCHAR(16),time DATETIME);
+
+INSERT INTO phpdb.test(id,name) VALUE (1,'tom');
+INSERT INTO phpdb.test(id,name) VALUE (2,'hello');
+
+SELECT * FROM phpdb.test;
+SHOW COLUMNS FROM phpdb.test;
+SHOW DATABASES;
+SHOW TABLES;
+INSERT INTO phpdb.user (name, password, time) VALUE ('小炮','123','2016-10-24');
+
+SELECT * FROM user;
+Select id FROM user WHERE name='小跑' and password = '123';
+INSERT INTO phpdb.user (name, password, time) VALUE ('小炮2','123','2016-10-24');
+select id ,name from USER WHERE name='加密' and password = 'EF190A64F36678CA71A76F74DB4B5B33';
+
+create PROCEDURE getName()
+
+BEGIN
+  SELECT user.name FROM phpdb.user;
+end;
+# create procedure getNames(size int)
+# BEGIN
+# SELECT * FROM user LIMIT size;
+# end
+
+#查询所有的存储过程
+select name from mysql.proc where db = 'phpdb' and 'type' = 'PROCEDURE';
+#删除存储过程
+DROP DATABASE phpdb;
+#查询全部
+SELECT * FROM user;
+
+DROP PROCEDURE insertList;
+#自动插入存储过程
+create procedure insertList(count int)
+  BEGIN
+    declare i int DEFAULT 0;
+    WHILE i<count DO
+      INSERT INTO phpdb.user (name, password, time) VALUE (CONCAT('自动插入',i) ,'123','2016-10-24');
+      set i=i+1;
+    END WHILE;
+  END;
+
+#删除自动插入的
+DELETE  FROM user WHERE user.name LIKE '自动插入%';
+
+#缓存表
+DROP table temp1;
+create table temp1(id int AUTO_INCREMENT PRIMARY KEY ,value VARCHAR(2555),time DATETIME);
+
+#执行插入
+drop procedure IF EXISTS getAllTxtName;
+
+#新建
+create procedure getAllTxtName(pw VARCHAR(16))
+  BEGIN
+    DECLARE cur_row_name VARCHAR(16);
+    DECLARE cur_row_id INT(16);
+    DECLARE i_count int DEFAULT 0;
+    DECLARE isRun int DEFAULT 0;
+    DECLARE res VARCHAR(255) DEFAULT '';
+    DECLARE cur_result CURSOR FOR select name,id from user WHERE password=pw;
+    DECLARE continue handler for not found set isRun = 1;
+    open cur_result;
+    FETCH cur_result INTO cur_row_name,cur_row_id;
+    WHILE (isRun = 0 ) DO
+      set res=CONCAT('[',cur_row_name,'id是:',cur_row_id,'],', res);
+      set i_count=i_count+1;
+      FETCH cur_result INTO cur_row_name,cur_row_id;
+    END WHILE;
+    SELECT res;
+    INSERT INTO temp1 (temp1.value,temp1.time) VALUES (res,curtime());
+    CLOSE cur_result;
+  END;
+
+#执行
+CALL getAllTxtName('123');
+
+DROP procedure  getResut;
+
+CREATE procedure getResut(in input int,out output VARCHAR(10),out output2 VARCHAR(10))
+  BEGIN
+    set output='未知参数';
+    IF (input=1) THEN
+      SET output='这是一';
+      ELSEIF (input=2) THEN
+        SET output='这是二';
+      ELSE
+      SET output='未知参数';
+    END IF;
+    INSERT INTO temp1 (temp1.value,temp1.time) VALUES (output,curtime());
+    set output2='执行成功!';
+  END;
+
+CALL getResut(2,@input,@inout2);
+
+
+
+#----------入库存储过程-------------
+
+CREATE TABLE phpdb.store
+(
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  total INT DEFAULT 0 NOT NULL,
+  used INT DEFAULT 0 NOT NULL,
+  less INT DEFAULT 0 NOT NULL
+);
+
+
+insert INTO store(total, used, less) VALUE(100,20,80);
+
+drop procedure IF EXISTS store;
+/**
+    success:0:执行成功,1:库存查询失败,2:库存不足
+ */
+create procedure store(in usedcount int,in rowid int,out success int)
+  BEGIN
+    declare isfound int DEFAULT 1;
+    declare total int default 0;
+    declare used int default 0;
+    declare less int default 0;
+    declare result cursor for select store.total,store.used,store.less FROM store WHERE store.id=rowid;
+    declare continue handler for not found set isfound =0;
+    OPEN result;
+    IF (isfound=1) THEN
+      fetch result into total,used,less;
+      #判断是否库存超出
+      IF less-usedcount<0 THEN
+        set success = 2;
+        ELSE
+          set used=used+usedcount;
+          set less=less-usedcount;
+          update store set store.used=used,store.less=less WHERE store.id=rowid;
+          set success = 0;
+        END IF;
+      ELSE
+        set success = 1;
+      END IF;
+    CLOSE result;
+  END;
+
+#使用
+
+call store(10,1,@success);
+select @success;
+
+#----------入库存储过程-------------
+
+#------------函数-------------------
+DROP FUNCTION IF EXISTS getNameAndPw;
+CREATE function getNameAndPw(inputId int) returns VARCHAR(255)
+  BEGIN
+    return (SELECT concat('这是名字与密码[',name,password,']') FROM user WHERE user.id=inputId LIMIT 1);
+  END;
+
+SELECT getNameAndPw(31);
+
+SELECT * FROM user WHERE id=31;
