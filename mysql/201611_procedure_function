@@ -31,13 +31,13 @@ DROP DATABASE phpdb;
 #查询全部
 SELECT * FROM user;
 
-DROP PROCEDURE insertList;
+DROP PROCEDURE IF EXISTS insertList;
 #自动插入存储过程
 create procedure insertList(count int)
   BEGIN
     declare i int DEFAULT 0;
     WHILE i<count DO
-      INSERT INTO phpdb.user (name, password, time) VALUE (CONCAT('自动插入',i) ,'123','2016-10-24');
+      INSERT INTO user (name, password, time) VALUE (CONCAT('自动插入',i) ,RAND() ,now());
       set i=i+1;
     END WHILE;
   END;
@@ -156,6 +156,6 @@ CREATE function getNameAndPw(inputId int) returns VARCHAR(255)
 
 SELECT getNameAndPw(31);
 
-SELECT * FROM user WHERE id=31;
+SELECT count(*) FROM user;
 
 SELECT count(user.name) as userNameCount,count(user.password) as passwordCount from user WHERE id<>0;
