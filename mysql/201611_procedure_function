@@ -94,7 +94,7 @@ CREATE procedure getResut(in input int,out output VARCHAR(10),out output2 VARCHA
   END;
 
 CALL getResut(2,@input,@inout2);
-
+select @input,@inout2;
 
 
 #----------入库存储过程-------------
