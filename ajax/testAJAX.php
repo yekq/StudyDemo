@@ -8,6 +8,7 @@
         <script type="text/javascript" src="../js/jquery-3.1.1.js"></script>
         <script type="text/javascript">
             $(function() {
+                $("#backdata").hide();
                 $("#subbtn").click(function() {
                     var params = $("input").serialize();
                     var name=$("#name").val();
@@ -20,10 +21,10 @@
                         dataType: "json",
                         data: params,
                         beforeSend: function () {
-                            alert('开始');
+//                            alert('开始');
                         },
                         complete:function () {
-                            alert('完成!');
+//                            alert('完成!');
                         },
                         success: function(msg){
                             loginResult(msg);
@@ -38,6 +39,9 @@
                     "<br /> 您提交的密码为：" + msg.password;
                 $("#backdata").html(backdata);
                 $("#backdata").css({color: "green"});
+                $("#backdata").animate({
+                    height:'toggle'
+                });
             }
         </script>
 
@@ -52,6 +56,7 @@
 
         <span id="backdata"></span>
         <p><input id="subbtn" type="button" value="提交数据" /></p>
+        <div id="div_result">哈哈</div>
         </body>
     </header>
 </html>
