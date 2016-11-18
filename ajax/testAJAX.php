@@ -10,29 +10,30 @@
             $(function() {
                 $("#backdata").hide();
                 $("#subbtn").click(function() {
-                    var params = $("input").serialize();
+//                    var params = $("input").serialize();
                     var name=$("#name").val();
                     var password=$("#password").val();
                     var url = "login.php?name="+name+"&password="+password;
                     $.ajax({
                         async:true,
-                        type: "post",
+                        type: "get",
                         url: url,
                         dataType: "json",
-                        data: params,
-                        beforeSend: function () {
-//                            alert('开始');
-                        },
+//                        data: params,
+                        beforeSend: beforeSendAction,
                         complete:function () {
 //                            alert('完成!');
+                            alert(name);
                         },
-                        success: function(msg){
-                            loginResult(msg);
-                        }
+                        success: loginResult
                     });
                 });
 
             });
+
+            function beforeSendAction() {
+                alert('开始');
+            }
 
             function loginResult(msg) {
                 var backdata = "您提交的姓名为：" + msg.name +
@@ -56,7 +57,7 @@
 
         <span id="backdata"></span>
         <p><input id="subbtn" type="button" value="提交数据" /></p>
-        <div id="div_result">哈哈</div>
+        <div id="div_result"></div>
         </body>
     </header>
 </html>
